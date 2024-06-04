@@ -72,15 +72,13 @@ internal class PosingTransformEditor
 
         ImGui.Text(text);
 
-        didChange |= ImBrio.DragFloat3($"{FontAwesomeIcon.ArrowsUpDownLeftRight.ToIconString()}", ref realTransform.Position, 0.1f, "Position");
-        anyActive |= ImGui.IsItemActive();
+        (var pdidChange, var panyActive) = ImBrio.DragFloat3($"###_transformPosition_0", ref realTransform.Position, 0.1f, FontAwesomeIcon.ArrowsUpDownLeftRight, "Position");
+        (var rdidChange, var ranyActive) = ImBrio.DragFloat3($"###_transformRotation_0", ref realEuler, 1f, FontAwesomeIcon.ArrowsSpin, "Rotation");
+        (var sdidChange, var sanyActive) = ImBrio.DragFloat3($"###_transformScale_0", ref realTransform.Scale, 0.1f, FontAwesomeIcon.ExpandAlt, "Scale");
 
-        didChange |= ImBrio.DragFloat3($"{FontAwesomeIcon.ArrowsSpin.ToIconString()}", ref realEuler, 5.0f, "Rotation");
-        anyActive |= ImGui.IsItemActive();
+        didChange |= pdidChange |= rdidChange |= sdidChange;
+        anyActive |= panyActive |= ranyActive |= sanyActive;
 
-        didChange |= ImBrio.DragFloat3($"{FontAwesomeIcon.ExpandAlt.ToIconString()}", ref realTransform.Scale, 0.1f, "Scale");
-        anyActive |= ImGui.IsItemActive();
-      
         ImGui.Spacing();
 
         if(ImBrio.FontIconButton("ik", FontAwesomeIcon.Adjust, "Inverse Kinematics", bone?.EligibleForIK == true))
@@ -181,14 +179,12 @@ internal class PosingTransformEditor
 
         ImGui.Text("Model Transform");
 
-        didChange |= ImBrio.DragFloat3($"{FontAwesomeIcon.ArrowsUpDownLeftRight.ToIconString()}", ref realTransform.Position, 0.1f, "Position");
-        anyActive |= ImGui.IsItemActive();
+        (var pdidChange, var panyActive) = ImBrio.DragFloat3($"###_transformPosition_0", ref realTransform.Position, 0.1f, FontAwesomeIcon.ArrowsUpDownLeftRight, "Position");
+        (var rdidChange, var ranyActive) = ImBrio.DragFloat3($"###_transformRotation_0", ref realEuler, 1f, FontAwesomeIcon.ArrowsSpin, "Rotation");
+        (var sdidChange, var sanyActive) = ImBrio.DragFloat3($"###_transformScale_0", ref realTransform.Scale, 0.1f, FontAwesomeIcon.ExpandAlt, "Scale");
 
-        didChange |= ImBrio.DragFloat3($"{FontAwesomeIcon.ArrowsSpin.ToIconString()}", ref realEuler, 5.0f, "Rotation");
-        anyActive |= ImGui.IsItemActive();
-
-        didChange |= ImBrio.DragFloat3($"{FontAwesomeIcon.ExpandAlt.ToIconString()}", ref realTransform.Scale, 0.1f, "Scale");
-        anyActive |= ImGui.IsItemActive();
+        didChange |= pdidChange |= rdidChange |= sdidChange;
+        anyActive |= panyActive |= ranyActive |= sanyActive;
 
 
         realTransform.Rotation = realEuler.ToQuaternion();

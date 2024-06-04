@@ -8,6 +8,7 @@ using Brio.Game.Core;
 using Brio.Game.GPose;
 using Brio.Game.Posing;
 using Brio.Game.World;
+using Brio.Input;
 using Brio.IPC;
 using Brio.Resources;
 using Brio.UI;
@@ -24,17 +25,19 @@ namespace Brio;
 
 public class Brio : IDalamudPlugin
 {
-    public const string Name = "Brio Crash Test";
+    public const string Name = "BCT";
 
     private ServiceProvider? _services = null;
 
     public static IPluginLog Log { get; private set; } = null!;
+    public static IFramework Framework { get; private set; } = null!;
 
     public Brio(DalamudPluginInterface pluginInterface)
     {
         // Setup dalamud services
         var dalamudServices = new DalamudServices(pluginInterface);
         Log = dalamudServices.Log;
+        Framework = dalamudServices.Framework;
 
         dalamudServices.Framework.RunOnTick(() =>
         {
@@ -97,6 +100,7 @@ public class Brio : IDalamudPlugin
         serviceCollection.AddSingleton(dalamudServices.TextureProvider);
         serviceCollection.AddSingleton(dalamudServices.Log);
         serviceCollection.AddSingleton(dalamudServices.ChatGui);
+        serviceCollection.AddSingleton(dalamudServices.KeyState);
 
         // Core / Misc
         serviceCollection.AddSingleton<EventBus>();
@@ -104,6 +108,7 @@ public class Brio : IDalamudPlugin
         serviceCollection.AddSingleton<ResourceProvider>();
         serviceCollection.AddSingleton<GameDataProvider>();
         serviceCollection.AddSingleton<WelcomeService>();
+        serviceCollection.AddSingleton<InputService>();
 
         // IPC
         serviceCollection.AddSingleton<BrioIPCService>();
@@ -142,15 +147,22 @@ public class Brio : IDalamudPlugin
         serviceCollection.AddSingleton<MainWindow>();
         serviceCollection.AddSingleton<SettingsWindow>();
         serviceCollection.AddSingleton<InfoWindow>();
+        serviceCollection.AddSingleton<UpdateWindow>();
         serviceCollection.AddSingleton<ActorAppearanceWindow>();
         serviceCollection.AddSingleton<ActionTimelineWindow>();
         serviceCollection.AddSingleton<PosingOverlayWindow>();
+        serviceCollection.AddSingleton<KeyBindPromptWindow>();
         serviceCollection.AddSingleton<PosingOverlayToolbarWindow>();
         serviceCollection.AddSingleton<PosingTransformWindow>();
         serviceCollection.AddSingleton<CameraWindow>();
         serviceCollection.AddSingleton<PosingGraphicalWindow>();
 
         return serviceCollection;
+    }
+
+    public static void NotifyError(string message)
+    {
+        EventBus.Instance.NotifyError(message);
     }
 
     public void Dispose()

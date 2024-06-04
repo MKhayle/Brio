@@ -18,7 +18,7 @@ internal class InfoWindow : Window
 
         _configurationService = configurationService;
 
-        Size = new Vector2(650, 350);
+        Size = new Vector2(650, 450);
     }
 
     public override void Draw()
@@ -29,8 +29,11 @@ internal class InfoWindow : Window
             if(textGroup.Success)
             {
                 var text = $"""
-                   
                     Welcome to the Brio Crash Test, {_configurationService.Version}!
+
+                    Brio is a suite of tools to enhance your GPosing experience,
+                    Brio is currently in alpha, as such, there may be bugs,
+                    if you find any, please report them.
 
                     While Testing, use Brio as you normally would,
 
@@ -44,7 +47,8 @@ internal class InfoWindow : Window
 
                     Thank You!
 
-
+                    Maintained by: Minmoose.
+                    Originally made by: Asgard.
                     """;
 
                 ImGui.TextWrapped(text);

@@ -82,7 +82,7 @@ internal class PosingCapability : ActorCharacterCapability
         }
         catch
         {
-            EventBus.Instance.NotifyError("Invalid pose file.");
+            Brio.NotifyError("Invalid pose file.");
         }
     }
 
@@ -95,7 +95,7 @@ internal class PosingCapability : ActorCharacterCapability
 
         if(!poseFile.Bones.Any() && !poseFile.MainHand.Any() && !poseFile.OffHand.Any())
         {
-            EventBus.Instance.NotifyError("Invalid pose file.");
+            Brio.NotifyError("Invalid pose file.");
             return;
         }
 
@@ -166,6 +166,11 @@ internal class PosingCapability : ActorCharacterCapability
 
         if(generateSnapshot)
             Snapshot(reset);
+    }
+
+    public void ToggleOverlay()
+    {
+        OverlayOpen = !OverlayOpen;
     }
 
     private void Reconcile(bool reset = true, bool generateSnapshot = true)
