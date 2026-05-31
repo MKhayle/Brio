@@ -447,7 +447,7 @@ public class MCDFService : IDisposable
                     || g.EndsWith(".scd", StringComparison.OrdinalIgnoreCase)
                     || (g.EndsWith(".avfx", StringComparison.OrdinalIgnoreCase)
                         && !g.Contains("/weapon/", StringComparison.OrdinalIgnoreCase)
-                        && !g.Contains("/equipment/", StringComparison.OrdinalIgnoreCase))
+                        && !g.Contains("/equipment/", StringComparison.OrdinalIgnoreCase)
                         && !g.Contains("/accessory/", StringComparison.OrdinalIgnoreCase))
                     || (g.EndsWith(".atex", StringComparison.OrdinalIgnoreCase)
                         && !g.Contains("/weapon/", StringComparison.OrdinalIgnoreCase)
